@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Виртуальный помощник - Бот с ответами</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍳</text></svg>">
+</head>
+<body>
+    <script type="module" src="/static/app.js"></script>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <h1>{{title}}<span>{{timenow}}</span></h1>
+                </div>
+                <p class="tagline">{{message}}</p>
+            </div>
+            <div class="theme-toggle">
+                <button id="themeToggle" aria-label="Переключить тему">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h2><i class="fas fa-comments"></i> Чат с помощником</h2>
+                    <div class="quick-actions">
+                        <button class="quick-btn" data-query="что приготовить на завтрак">
+                            <!-- <i class="fas fa-sun"></i> Завтрак -->
+                        </button>
+                        <button class="quick-btn" data-query="быстрый ужин">
+                            <!-- <i class="fas fa-moon"></i> Ужин -->
+                        </button>
+                        <button class="quick-btn" data-query="десерт">
+                            <!-- <i class="fas fa-ice-cream"></i> Десерт -->
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Сообщения будут добавляться сюда -->
+                    <div class="message bot-message">
+                        <div class="avatar">
+                            <i class="fas fa-chef-hat"></i>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-text">
+                                Привет! Я ваш виртуальный помощник 🤖<br>
+                                Я могу:<br>
+                                • --------------------<br>
+                                • --------------------<br>
+                                • --------------------<br>
+                                • --------------------<br><br>
+                                Спросите меня что-нибудь!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span class="typing-text">Бот печатает...</span>
+                </div>
+
+                <div class="chat-input-container">
+                    <div class="input-wrapper">
+                        <button class="input-action" id="attachBtn" aria-label="Прикрепить файл">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <input 
+                            type="text" 
+                            id="messageInput" 
+                            placeholder="Напишите ваш вопрос или перечислите продукты..."
+                            autocomplete="off"
+                            maxlength="500"
+                        >
+                        <button class="input-action" id="emojiBtn" aria-label="Добавить эмодзи">
+                            <i class="far fa-smile"></i>
+                        </button>
+                    </div>
+                    <button id="sendBtn" class="send-btn" aria-label="Отправить сообщение">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+
+                <div class="chat-footer">
+                    <div class="hint">
+                        <i class="fas fa-lightbulb"></i>
+                        --------------------
+                    </div>
+                    <div class="chat-actions">
+                        <button id="clearChat" class="action-btn">
+                            <i class="fas fa-trash-alt"></i> Очистить чат
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-history"></i> История запросов</h3>
+                    <div class="history-list" id="historyList">
+                        <!-- История будет добавляться сюда -->
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-fire-alt"></i> Часто задаваемые вопросы</h3>
+                    <ul class="popular-list">
+                        <li data-query="быстрые рецепты на ужин"><i class="fas fa-clock"></i> (1)</li>
+                        <li data-query="рецепт борща"><i class="fas fa-utensil-spoon"></i> (2)</li>
+                        <li data-query="выпечка для начинающих"><i class="fas fa-birthday-cake"></i> (3)</li>
+                        <li data-query="салат рецепт"><i class="fas fa-carrot"></i> (4) </li>
+                        <li data-query="напитки"><i class="fas fa-glass-whiskey"></i> (5)</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="modal" id="aboutModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2><i class="fas fa-info-circle"></i> О проекте</h2>
+            <p>Этот кулинарный помощник создан для того, чтобы помочь вам в повседневной готовке. Бот использует имитацию ИИ для генерации рецептов и советов.</p>
+            <p>Все ваши сообщения сохраняются локально в вашем браузере.</p>
+        </div>
+    </div>
+<button id="doAction">API</button>
+<button id="sendMessage">message</button>
+</body>
+</html>
