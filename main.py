@@ -37,3 +37,7 @@ async def get_time():
         "date": datetime.now().strftime("%Y-%m-%d"),
         "seconds": datetime.now().second
     }
+
+@app.get("/api/liveness", status_code=200)
+def message_status():
+    return {"message": "OK"}
